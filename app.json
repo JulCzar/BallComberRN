@@ -1,12 +1,15 @@
 {
-  "name": "EmojiCrushRN",
-  "displayName": "EmojiCrushRN",
+  "name": "BallComber",
+  "displayName": "BallComber",
   "expo": {
-    "name": "EmojiCrushRN",
-    "slug": "EmojiCrushRN",
+    "name": "BallComber",
+    "slug": "BallComber",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "br.czar.ballComber"
+    }
   }
 }
