@@ -1,7 +1,7 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
-import Game from './pages/Game'
+import Game from './view/Game'
 
 const Routes = createAppContainer(createStackNavigator({
   Main: {
