@@ -1,11 +1,6 @@
 import { Direction } from '../models/Utils'
 
-type Increments = (direction: Direction) => {
-  xIncrement: number,
-  yIncrement: number
-}
-
-export const getIncrements: Increments = (direction: Direction) => ({
+export const getIncrements: (direction: Direction) => { xIncrement: number, yIncrement: number } = direction => ({
   'up': {
     xIncrement: 0,
     yIncrement: -1

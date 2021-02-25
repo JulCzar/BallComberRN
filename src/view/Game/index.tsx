@@ -1,15 +1,18 @@
 import React from 'react'
-import Ball from '../../components/Ball'
+
 import { createGameEnvironment } from '../../controller/game'
+import { Container } from '../../styles'
+import { GridView, Row } from './styles'
+
+// Models
 import Grid from '../../models/Grid'
 import Item from '../../models/Item'
-import { Container } from '../../styles'
-import { Row } from './styles'
+import Ball from '../../components/Ball'
 
 // Temporary
 const GAME_CONFIG = {
   gridBase: new Grid(10, 10),
-  animationDuration: 500
+  animationDuration: 1000
 }
 
 const Game = () => {
@@ -24,15 +27,16 @@ const Game = () => {
 
   return (
     <Container>
-    {grid.map(row => (
-      <Row key={JSON.stringify(row)}>
-      {row.map(i => (
-        <Ball
-          key={JSON.stringify(i)}
-          onSwipe={game.handleMovement}
-          item={i}
-        />))}
-      </Row>))}
+      <GridView>
+      {grid.map(row => (
+        <Row key={JSON.stringify(row)}>
+        {row.map(i => (
+          <Ball key={JSON.stringify(i)}
+            onSwipe={game.handleMovement}
+            item={i}
+          />))}
+        </Row>))}
+      </GridView>
     </Container>
   );
 }

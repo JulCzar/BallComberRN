@@ -1,61 +1,53 @@
 import React from 'react'
-import { View } from 'react-native'
-import GestureRecognizer from 'react-native-swipe-gestures'
-import styled from 'styled-components'
+import { Animated } from 'react-native'
 import Item from '../../models/Item'
 import { Direction, Position } from '../../models/Utils'
-import { vmin } from '../../utils/viewPortUnits'
+import { Container, ItemView } from './styles'
 
 const COLORS = ['teal', 'red', '#666654', 'pink', 'purple']
 
-interface ItemDependent {
+interface BallConfig {
   item: Item,
   onSwipe?: (direction: Direction, position: Position) => void
 }
 
-interface ItemAttributes {
-  color: string
-}
+const Ball: React.FC<BallConfig> = ({ item, onSwipe }) => {
+  const fadeAnim = React.useRef(new Animated.Value(0)).current
+  const [swipe, setSwipe] = React.useState<Direction | null>(null)
 
-const Container = styled(View)`
-  align-items: center;
-  height: ${vmin(10)}px;
-  justify-content: center;
-  width: ${vmin(10)}px;
-`
-
-const ItemView = styled(GestureRecognizer)<ItemAttributes>`
-  text-align: center;
-  color: #fff;
-  font-weight: bold;
-
-  background: ${i => i.color};
-  border-radius: ${vmin(10)*0.25}px;
-  height: ${vmin(10)*0.8}px;
-  width: ${vmin(10)*0.8}px;
-  
-`
-
-const Ball: React.FC<ItemDependent> = ({ item, onSwipe }) => {
-  const [swipe, setSwipe] = React.useState<'up'|'down'|'right'|'left'|''>('')
+  React.useEffect(() => Animated.timing(fadeAnim, {
+    toValue: 1,
+    duration: 500,
+    useNativeDriver: false
+  }).start(), [fadeAnim])
 
   React.useEffect(() => {
     if (!swipe) return
 
     if (onSwipe) onSwipe(swipe, item.position)
     
-    setSwipe('')
+    setSwipe(null)
   }, [swipe])
 
+  const fallHeight = -30 * item.getFallCount()
+  const fallAnimation = {
+    transform: [
+      {
+        translateY: fadeAnim.interpolate({
+          inputRange: [0,1],
+          outputRange: [fallHeight, 0]
+        })
+      }
+    ]
+  }
+
   return (
-    <Container>
-      <ItemView
+    <Container style={fallAnimation}>
+      <ItemView color={COLORS[item.value]}
         onSwipeUp={() => setSwipe('up')}
         onSwipeRight={() => setSwipe('right')}
         onSwipeDown={() => setSwipe('down')}
-        onSwipeLeft={() => setSwipe('left')}
-        color={COLORS[item.value]}
-      />
+        onSwipeLeft={() => setSwipe('left')}/>
     </Container>
   )
 }

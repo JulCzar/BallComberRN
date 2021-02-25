@@ -1,15 +1,15 @@
 {
-  "name": "BallComber",
-  "displayName": "BallComber",
+  "name": "SquareComber",
+  "displayName": "SquareComber",
   "expo": {
-    "name": "BallComber",
-    "slug": "BallComber",
+    "name": "SquareComber",
+    "slug": "SquareComber",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
-      "package": "br.czar.ballComber"
+      "package": "br.czar.SquareComber"
     }
   }
 }

@@ -3,15 +3,10 @@ import Grid from '../models/Grid'
 import Item from '../models/Item'
 import { Position, Direction } from '../models/Utils'
 import { doAfter } from '../utils/wait'
+import gameConfig, { Observer } from './gameConfig'
 import { getIncrements } from './getIncrements'
 
-type Observer = (grid: Item[][]) => void
-interface Config {
-  gridBase: Grid,
-  animationDuration?: number
-}
-
-export const createGameEnvironment = ({ gridBase, animationDuration = 0 }: Config) => {
+export const createGameEnvironment = ({ gridBase, animationDuration = 0 }: gameConfig) => {
   const grid: Item[][] = [[]]
   const { width, height } = gridBase
   const observers: Observer[] = []
@@ -32,6 +27,8 @@ export const createGameEnvironment = ({ gridBase, animationDuration = 0 }: Confi
   }
 
   const subscribe = (observer: Observer) => {
+    if (observers.includes(observer)) return
+
     observers.push(observer)
   }
 
@@ -250,10 +247,14 @@ export const createGameEnvironment = ({ gridBase, animationDuration = 0 }: Confi
 
   /** Function that create the initial grid and notify all observers about the grid layout */
   const start = () => {
+    const clearFallCount = () => grid.forEach(row => row.forEach(i => i.getFallCount()))
+
     createInitialGrid()
 
     handleCombos(0)
-    
+
+    clearFallCount()
+
     notifyAll()
   }
 

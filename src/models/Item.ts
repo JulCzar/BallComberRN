@@ -1,16 +1,19 @@
 import { sortValue } from '../utils/sortValue'
+import { Direction } from './Utils'
 
 export default class Item {
   fall: number
   position: { x: number; y: number }
   value: number
   maxValue: number
+  swipe: Direction | null
 
   constructor (x: number, y: number, initialValue: number, maxValue: number) {    
     this.maxValue = maxValue
     this.value = initialValue
     this.position =  { x, y }
     this.fall = 0;
+    this.swipe = null
   }
 
   sortNewValue = () => {
