@@ -33,6 +33,14 @@ export default class Item {
     return value
   }
 
+  getSwipeDirection() {
+    const result = this.swipe
+
+    this.swipe = null
+
+    return result
+  }
+
   increaseFall() {
     this.fall++
   }

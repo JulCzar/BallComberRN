@@ -1,6 +1,7 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
 import Routes from './src/routes';
+import Game from './src/view/Game';
 
 const App = () => (
   <><StatusBar
@@ -8,7 +9,7 @@ const App = () => (
     barStyle='light-content'
     translucent={true}
   />
-  <Routes/></>
+  <Game/></>
 );
 
 export default App

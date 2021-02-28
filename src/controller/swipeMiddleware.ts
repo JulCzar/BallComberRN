@@ -25,7 +25,18 @@ export const getSwipeMiddleWare = ({
   const grid = gridBase
   const observers: Observer [] = []
 
-  const onSwipe = (direction: Direction, position: Position) => {
+  const subscribe = (observer: Observer) => {
+    if (observers.includes(observer)) return
+
+    observers.push(observer)
+  }
+
+  const notifyAll = () => {
+    console.log(`Notifying ${observers.length} observers about a swipe event`)
+    observers.forEach(observer => observer(grid.getGrid()))
+  }
+
+  const onSwipe = (direction: Direction, position: Position, toDoNext: (direction: Direction, position: Position) => void) => {
     const { x, y } = position
 
     const { xIncrement, yIncrement } = getIncrements(direction)
@@ -37,6 +48,13 @@ export const getSwipeMiddleWare = ({
     itemMoved.swipe = direction
     itemSided.swipe = oppositeDirection
 
-    doAfter(() => {}, animationDuration)
+    notifyAll()
+
+    doAfter(toDoNext, animationDuration, direction, position)
+  }
+
+  return {
+    subscribe,
+    onSwipe
   }
 }

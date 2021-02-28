@@ -231,7 +231,7 @@ export const createGameEnvironment = ({ gridBase, animationDuration = 0 }: gameC
 
     notifyAll()
 
-    console.log(`moving ${y}-${x} ${direction}`)
+    console.log(`moving ${JSON.stringify(position)} ${direction}`)
 
     const combos = findCombos()
 
