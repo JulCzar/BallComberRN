@@ -5,6 +5,7 @@ import { Direction, Position } from '../../models/Utils'
 import { Container, ItemView } from './styles'
 
 import Item from '../../models/Item'
+import { vmin } from '../../utils/viewPortUnits'
 
 const COLORS = ['teal', 'red', '#666654', 'pink', 'purple']
 
@@ -49,7 +50,7 @@ const Ball: React.FC<BallConfig> = ({ item, onSwipe }) => {
       return ITEM_HEIGHT
     }
 
-    const ITEM_HEIGHT = -30
+    const ITEM_HEIGHT = vmin(10)
     const swipe = item.getSwipeDirection()
 
     const result = {
@@ -77,7 +78,7 @@ const Ball: React.FC<BallConfig> = ({ item, onSwipe }) => {
     }
   }
 
-  const fallHeight = -30 * item.getFallCount()
+  const fallHeight = vmin(10) * item.getFallCount()
   const itemAnimation = getItemAnimation()
 
   return (
